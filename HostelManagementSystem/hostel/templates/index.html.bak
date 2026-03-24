@@ -1,0 +1,423 @@
+{% extends 'navigation.html' %}
+{% load static %}
+{% block main %}
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.pantry-card {
+  background: linear-gradient(135deg, #fef3ec, #e8f4ff 45%, #f3ecff 90%);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(67, 89, 173, 0.2);
+  padding: 18px;
+}
+.meal-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.meal-pill.breakfast { background: #ffe8c7; color: #c26a00; box-shadow: 0 6px 12px rgba(255, 170, 64, 0.35);}
+.meal-pill.lunch { background: #c8f1d8; color: #1f7a46; box-shadow: 0 6px 12px rgba(76, 175, 80, 0.28);}
+.meal-pill.dinner { background: #dcd9ff; color: #2f3aa9; box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);}
+.dish-chip {
+  display: inline-block;
+  background: rgba(255,255,255,0.7);
+  color: #3949ab;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+.allergen-chip {
+  background: #ffdfdf;
+  color: #b7183c;
+}
+.count-badge {
+  min-width: 54px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-weight: 800;
+  font-size: 13px;
+}
+.count-open { background: #daf7e3; color: #0e8a3c; box-shadow: inset 0 0 0 1px #b2e8c4; }
+.count-closed { background: #f5f5f5; color: #888; box-shadow: inset 0 0 0 1px #e0e0e0; }
+.dish-card {
+  background: linear-gradient(120deg, #ffffff, #f6f9ff);
+  border-radius: 14px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+  border: 1px solid #ecf1ff;
+}
+.dish-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1f2b59;
+}
+.dish-desc {
+  font-size: 13px;
+  color: #66708f;
+}
+
+.image1,.image2,.image3,.image4 {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+
+
+.image1:hover,.image2:hover,.image3:hover,.image4:hover{
+  opacity: 0.3;
+}
+
+</style>
+<body>
+<div class="position-relative">
+  <img src="{% static 'images/hostel2.jpg' %}"  style="width:100%; height:600px; object-fit: cover;">
+  <div style="position:absolute; inset:0; background:linear-gradient(120deg, rgba(24,78,60,0.55), rgba(170,200,170,0.18));"></div>
+  <div class="container h-100 position-absolute" style="top:0; left:0; right:0;">
+    <div class="row h-100 align-items-center">
+      <div class="col-lg-7 col-md-9 text-white">
+        <div class="card border-0 shadow-lg" style="background: rgba(12,24,52,0.72);">
+          <div class="card-body p-4 p-md-5">
+            <h1 class="display-5 font-weight-bold mb-3">Your Future is Built Here.</h1>
+            <p class="lead mb-4">Endless opportunities to lead, learn and grow set the stage for you to carve your path to success and leave your mark on the world.</p>
+            <a href="{% url 'book_Hostel' %}" class="btn btn-warning btn-lg font-weight-bold px-4">Book a Cabinet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<style>
+  .hover-card {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-card:hover {
+    transform: scale(1.03); /* card zoom on hover */
+  }
+
+  .hover-card .card-title {
+    transition: color 0.3s ease;
+    color: #dc3545; /* initial: Bootstrap red */
+  }
+
+  .hover-card:hover .card-title {
+    color: #28a745; /* green on hover */
+  }
+
+  .hover-card:hover .card-title i {
+    color: #ffc107; /* icon becomes yellow */
+  }
+</style>
+
+<div class="container mt-4">
+  <div class="row g-3 justify-content-center">
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card shadow-sm h-100 hover-card">
+        <div class="card-body text-center">
+          <h5 class="card-title"><i class="fas fa-table"></i> Studying Area</h5>
+        </div>
+        <img src="{% static 'images/Study1.jpg' %}" class="card-img-bottom img-fluid image1" style="height: 200px; object-fit: cover;">
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card shadow-sm h-100 hover-card">
+        <div class="card-body text-center">
+          <h5 class="card-title"><i class="fas fa-utensils"></i> Pantry Zone</h5>
+        </div>
+        <img src="{% static 'images/kitchen-area.jpg' %}" class="card-img-bottom img-fluid image2" style="height: 200px; object-fit: cover;">
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card shadow-sm h-100 hover-card">
+        <div class="card-body text-center">
+          <h5 class="card-title"><i class="fas fa-dumbbell"></i> Gym Area</h5>
+        </div>
+        <img src="{% static 'images/Gym1.png' %}" class="card-img-bottom img-fluid image3" style="height: 200px; object-fit: cover;">
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card shadow-sm h-100 hover-card">
+        <div class="card-body text-center">
+          <h5 class="card-title"><i class="fas fa-chair"></i> Relaxing Zone</h5>
+        </div>
+        <img src="{% static 'images/Relax2.jpg' %}" class="card-img-bottom img-fluid image4" style="height: 200px; object-fit: cover;">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="row">
+
+   <!-- Hostel Rules Card (Dark Theme) -->
+   <div class="col-md-6">
+     <div class="card shadow h-100">
+       <div class="card-body" style="height: 650px; background-color: #1e1e2f; color: #f1f1f1;">
+         <h5 class="mb-3" style="color: #00ff99; font-weight: bold;">
+           <i class="fas fa-gavel"></i> University Rules and Regulations
+         </h5>
+         <hr style="border-top: 1px solid #444;">
+
+         <div style="overflow-y: auto; flex-grow: 1; padding: 15px;">
+           <ul class="pl-3" style="line-height: 1.8; font-size: 15px;">
+             <li><span style="color: #69b3ff;">Students must maintain silence during classes and avoid disturbing others.</span></li>
+             <li><span style="color: #ff6b6b;">Students should arrive to class on time and be seated before the lesson begins</span></li>
+             <li><span style="color: #6aff7a;">Students must turn off all electrical equipment & lights before leaving their rooms.</span></li>
+             <li><span style="color: #69b3ff;">Mobile phones must be switched off or kept on silent mode during class hours unless permitted by the teacher.</span></li>
+             <li><span style="color: #ff6b6b;">Smoking, Alcohol & Drugs are strictly prohibited in and around the classes. Offenders will face strict action.</span></li>
+             <li><span style="color: #6aff7a;">Students must respect teachers, staff, and fellow classmates at all times.</span></li>
+             <li><span style="color: #69b3ff;">Classroom equipment, books, and materials must be handled carefully and returned after use.</span></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+
+    <!-- Pantry Menu Card -->
+    <div class="col-md-6">
+      <div class="pantry-card h-100 p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div class="text-uppercase text-secondary" style="letter-spacing:1px;font-size:13px;">Pantry Menu</div>
+            <div class="font-weight-bold" style="font-size:24px;">{% if showing_today %}Today{% else %}Upcoming{% endif %} · {{ display_date|date:"M d, Y" }}</div>
+          </div>
+          <a href="{% url 'pantry_menu' %}" class="btn btn-sm btn-primary" style="box-shadow:0 8px 18px rgba(33,150,243,0.35);">Order Pantry</a>
+        </div>
+        <div style="max-height: 580px; overflow-y: auto;">
+          {% for label, items in menu_sections %}
+            <div class="mb-3 pb-2 border-bottom">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="meal-pill {{ label|lower }}">
+                  {% if label == "Breakfast" %}<i class="fas fa-sun mr-1"></i>{% elif label == "Lunch" %}<i class="fas fa-cloud-sun mr-1"></i>{% else %}<i class="fas fa-moon mr-1"></i>{% endif %}
+                  {{ label }}
+                </span>
+                <span class="text-muted small">{{ display_date|date:"M d" }}</span>
+              </div>
+              {% if items %}
+                {% for item in items %}
+                  <div class="p-3 mb-2 dish-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="dish-title">{{ item.dish.name }}</div>
+                      <div class="count-badge {% if item.portions_available > 0 %}count-open{% else %}count-closed{% endif %}">
+                        {{ item.portions_available }} left
+                      </div>
+                    </div>
+                    <div class="dish-desc mb-1">{{ item.dish.description|default:"" }}</div>
+                    {% if item.dish.tags %}
+                      <div class="mb-1">
+                        <span class="dish-chip">{{ item.dish.tags }}</span>
+                      </div>
+                    {% endif %}
+                    {% if item.dish.allergens %}
+                      <div>
+                        <span class="dish-chip allergen-chip">Allergens: {{ item.dish.allergens }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="text-muted small">No dishes planned.</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          {% if menu_sections|length == 0 %}
+            <p class="text-muted mb-0">No pantry plan available yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- User Registration -->
+{% if error == "no" %}
+<script>
+	   alert('Registration Successfully');
+       window.location=('{% url 'user_login' %}');
+  </script>
+  {% endif %}
+  {% if error == "exists" %}
+  <script>
+	    alert('Email already registered. Try a different email.');
+  </script>
+  {% endif %}
+
+{% if error == "yes" %}
+<script>
+	    alert('Something went wrong, Try Again');
+
+
+
+</script>
+{% endif %}
+
+<script>
+    function checkpass()
+    {
+      if(document.signup.password.value!=document.signup.cpwd.value){
+        alert('Password and Confirm Password field does not match');
+        document.signup.cpwd.focus();
+        return false;
+      }
+      return true;
+    }
+</script>
+
+<div class="modal fade" id="userRegModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="userRegModalLabel"
+                    style="font-family: 'Monotype Corsiva'; font-size: 35px;">Registration Form</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="signup" name="signup" enctype="multipart/form-data"
+                      onsubmit="return checkpass();">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Registration No</label> <input type="number"
+                                                                                 class="form-control" name="regNo"
+                                                                                 value="{{regno}}" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label> <input type="text"
+                                                                            class="form-control" name="firstName"
+                                                                            id="firstName"
+                                                                            placeholder="Enter here First Name"
+                                                                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label> <input type="text"
+                                                                           class="form-control" name="lastName"
+                                                                           id="lastName"
+                                                                           placeholder="Enter here Last Name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Image</label>
+                        <input type="file" name="image" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <select name="gender" class="form-control" required="required">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contact Number</label> <input
+                            type="text" class="form-control" name="contactNo" id="contactNo"
+                            placeholder="91XXXXXXXX" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email ID</label> <input type="email"
+                                                                          class="form-control" name="email" id="email"
+                                                                          placeholder="Ex-abc@gmail.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                               placeholder="Enter here Password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="cpwd" id="cpwd"
+                               placeholder="Enter Again Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- End User Registration -->
+
+<!-- User Login -->
+
+<div class="modal fade" id="userLoginModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="userLoginModalLabel"
+                    style="font-family: 'Monotype Corsiva'; font-size: 35px;">User Login</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Email ID</label> <input type="email"
+                                                                          class="form-control" name="email"
+                                                                          placeholder="Ex-abc@gmail.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter here Password"
+                               required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- End User Login -->
+{% include 'footer.html' %}
+{% endblock %}

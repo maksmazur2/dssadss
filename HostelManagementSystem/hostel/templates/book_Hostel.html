@@ -1,0 +1,334 @@
+{% extends 'user_navbar.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .search-sidebar .form-group label {
+        font-weight: 600;
+    }
+    .search-tabs {
+        border-bottom: 1px solid #dee2e6;
+    }
+    .search-tabs .nav-link {
+        color: #0a58ca;
+        font-weight: 600;
+    }
+    .search-tabs .nav-link.active {
+        color: #212529;
+        border-color: #dee2e6 #dee2e6 #fff;
+        background: #fff;
+    }
+    .search-card {
+        border: 1px solid #e5e7eb;
+    }
+    .description-card .card-header {
+        background: #f8f9fa;
+        font-weight: 600;
+    }
+    .description-image {
+        width: 100%;
+        height: 260px;
+        background: #f1f3f5;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-weight: 600;
+    }
+    .search-actions .btn {
+        width: 100%;
+    }
+    .results-banner {
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-weight: 600;
+        background: #f8f9fa;
+        margin-bottom: 12px;
+    }
+    .result-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        margin-bottom: 14px;
+    }
+    .result-card .badge-area {
+        width: 120px;
+        height: 120px;
+        background: #0b6b3e;
+        color: #fff;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+    }
+    .result-meta {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    .result-actions .btn {
+        min-width: 110px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h4 class="mb-3">Search Spaces - Studying Rooms</h4>
+    <div class="row">
+        <div class="col-lg-4 mb-3">
+            <div class="card search-card search-sidebar">
+                <div class="card-body">
+                    <ul class="nav nav-tabs search-tabs mb-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#searchByTime" role="tab">Search by Time</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#searchBySpace" role="tab">Search by Space</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="searchByTime" role="tabpanel">
+                            <form method="GET">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control" name="category">
+                                    <option {% if not search_category or search_category == 'Show All' %}selected{% endif %}>Show All</option>
+                                    <option value="individual" {% if search_category == 'individual' %}selected{% endif %}>Individual Study</option>
+                                    <option value="group" {% if search_category == 'group' %}selected{% endif %}>Group Study</option>
+                                    <option value="quiet" {% if search_category == 'quiet' %}selected{% endif %}>Quiet Study</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Capacity</label>
+                                <select class="form-control" name="capacity">
+                                    <option {% if not search_capacity or search_capacity == 'All Spaces (not seats)' %}selected{% endif %}>All Spaces (not seats)</option>
+                                    <option {% if search_capacity == '1-2 People' %}selected{% endif %}>1-2 People</option>
+                                    <option {% if search_capacity == '3-4 People' %}selected{% endif %}>3-4 People</option>
+                                    <option {% if search_capacity == '5+ People' %}selected{% endif %}>5+ People</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Zone</label>
+                                <select class="form-control" name="zone">
+                                    <option {% if not search_zone or search_zone == 'Show All' %}selected{% endif %}>Show All</option>
+                                    <option {% if search_zone == 'Silent Study' %}selected{% endif %}>Silent Study</option>
+                                    <option {% if search_zone == 'Quiet Study' %}selected{% endif %}>Quiet Study</option>
+                                    <option {% if search_zone == 'Collaborative' %}selected{% endif %}>Collaborative</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input id="searchDate" type="date" name="stayfrom" class="form-control" value="{{ search_date }}">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label>From</label>
+                                    <input id="searchFrom" type="time" name="start_time" class="form-control" value="{{ search_start|default:'08:00' }}">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Until</label>
+                                    <input id="searchUntil" type="time" name="end_time" class="form-control" value="{{ search_end|default:'11:00' }}">
+                                </div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="floor5" name="floor5" {% if flag_floor5 %}checked{% endif %}>
+                                    <label class="form-check-label" for="floor5">5th Floor Group Study Rooms (2 people only)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="accessible" name="accessible" {% if flag_accessible %}checked{% endif %}>
+                                    <label class="form-check-label" for="accessible">Accessible Seat/Space</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="group2" name="group2" {% if flag_group2 %}checked{% endif %}>
+                                    <label class="form-check-label" for="group2">Group Study Room (2 people only)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="group4" name="group4" {% if flag_group4 %}checked{% endif %}>
+                                    <label class="form-check-label" for="group4">Group Study Rooms (2 to 4 people)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="individual" name="individual" {% if flag_individual %}checked{% endif %}>
+                                    <label class="form-check-label" for="individual">Individual Study Rooms (1 to 2 people)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="power" name="power" {% if flag_power %}checked{% endif %}>
+                                    <label class="form-check-label" for="power">Power Available</label>
+                                </div>
+                            </div>
+                            <div class="search-actions mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search mr-1"></i> Search
+                                </button>
+                            </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="searchBySpace" role="tabpanel">
+                            <p class="text-muted mb-0">Search by specific space will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 mb-3">
+            <div id="descriptionPanel" class="card description-card">
+                <div class="card-header">Description</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <img src="{% static 'images/hostel2.jpg' %}" alt="Study Space Guidelines" class="img-fluid rounded border">
+                    </div>
+                    <p class="mb-2">
+                        While occupied, study rooms should remain quiet and free of obstructions. Please keep the
+                        space clean and return furniture to its original layout after use.
+                    </p>
+                    <h6 class="mt-3">Study Space Reservations</h6>
+                    <ul class="mb-0">
+                        <li>Rooms are available for active students and staff only.</li>
+                        <li>Reservations are limited to one space at a time.</li>
+                        <li>Late arrivals may result in forfeiting the reservation.</li>
+                        <li>Respect posted room capacity at all times.</li>
+                    </ul>
+                </div>
+            </div>
+
+                <div id="resultsPanel" class="{% if show_results %}{% else %}d-none{% endif %}">
+                <div class="results-banner" id="resultsBanner">
+                    {% if no_results_msg %}
+                        {{ no_results_msg }}
+                    {% elif rooms %}
+                        Showing {{ rooms|length }} matches
+                    {% else %}
+                        No spaces match your filters for this time window
+                    {% endif %}
+                </div>
+                <div id="resultsList">
+                    {% for r in rooms %}
+                    <div class="card result-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start">
+                                <div class="badge-area mr-3 text-center">
+                                    <div>
+                                        <div>{{ r.max_capacity|default:r.seater }} People</div>
+                                        {% if r.is_accessible %}<small>Accessible</small>{% endif %}
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="font-weight-bold text-primary">
+                                        {{ r.category|default:'Study Room'|title }} - Cabinet {{ r.room_no }}
+                                    </div>
+                                    <div class="result-meta">
+                                        {{ r.zone|default:'Zone' }} | Floor {{ r.floor|default:'-' }} | Room {{ r.room_no }}
+                                    </div>
+                                    <div class="result-meta">Time: <span class="js-time-range">{{ search_start|default:'08:00' }} - {{ search_end|default:'11:00' }}</span></div>
+                                    {% if r.id in booked_room_ids %}
+                                        <div class="result-meta text-danger">Booked for this time</div>
+                                    {% else %}
+                                        <div class="result-meta text-success">Available</div>
+                                    {% endif %}
+                                </div>
+                                <div class="result-actions ml-3">
+                                    <button type="button" class="btn btn-primary btn-sm book-now-btn" data-room-id="{{ r.id }}" {% if r.id in booked_room_ids %}disabled{% endif %}>Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking success modal -->
+<div class="modal fade" id="bookingSuccessModal" tabindex="-1" role="dialog" aria-labelledby="bookingSuccessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <img src="{% static 'images/booking_success.png' %}" alt="Booking submitted" class="img-fluid w-100">
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary px-4" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="bookForm" method="POST" class="d-none">
+    {% csrf_token %}
+    <input type="hidden" name="rooms" id="bookRoomId">
+    <input type="hidden" name="stayfrom" id="bookDate">
+    <input type="hidden" name="start_time" id="bookStart">
+    <input type="hidden" name="end_time" id="bookEnd">
+</form>
+
+<script>
+    (function() {
+        const resultsPanel = document.getElementById('resultsPanel');
+        const descriptionPanel = document.getElementById('descriptionPanel');
+        const resultsBanner = document.getElementById('resultsBanner');
+        const searchBtn = document.querySelector('.search-actions .btn');
+        const searchDate = document.getElementById('searchDate');
+        const searchFrom = document.getElementById('searchFrom');
+        const searchUntil = document.getElementById('searchUntil');
+        const bookForm = document.getElementById('bookForm');
+        const bookRoomId = document.getElementById('bookRoomId');
+        const bookDate = document.getElementById('bookDate');
+        const bookStart = document.getElementById('bookStart');
+        const bookEnd = document.getElementById('bookEnd');
+
+        function updateTimeRanges() {
+            const timeRange = `${searchFrom.value || '08:00'} - ${searchUntil.value || '11:00'}`;
+            document.querySelectorAll('.js-time-range').forEach((el) => {
+                el.textContent = timeRange;
+            });
+        }
+
+        function handleBookClick(e) {
+            const btn = e.target.closest('.book-now-btn');
+            if (!btn) {
+                return;
+            }
+            bookRoomId.value = btn.getAttribute('data-room-id');
+            bookDate.value = searchDate.value;
+            bookStart.value = searchFrom.value;
+            bookEnd.value = searchUntil.value;
+            bookForm.submit();
+        }
+
+        if (resultsPanel) {
+            resultsPanel.addEventListener('click', handleBookClick);
+        }
+
+        if (searchFrom) {
+            searchFrom.addEventListener('change', updateTimeRanges);
+        }
+        if (searchUntil) {
+            searchUntil.addEventListener('change', updateTimeRanges);
+        }
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function() {
+                updateTimeRanges();
+            });
+        }
+
+        if (!resultsPanel.classList.contains('d-none')) {
+            descriptionPanel.classList.add('d-none');
+        }
+    })();
+</script>
+
+{% if success %}
+<script>
+    (function() {
+        // show celebratory modal after successful booking submission
+        $('#bookingSuccessModal').modal('show');
+    })();
+</script>
+{% endif %}
+
+{% endblock content %}

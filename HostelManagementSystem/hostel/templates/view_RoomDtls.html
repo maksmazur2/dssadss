@@ -1,0 +1,70 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">My Bookings</h5>
+        <div class="container-fluid">
+           <div class="row" id="print">
+               <div class="col-lg-12">
+                   <div class="card shadow">
+                        <div class="card-body">
+                            <table class="table table-bordered" cellspacing="0" width="100%" border="1">
+                                <tr>
+                                   <td colspan="2" style="text-align:center; color:green"><h5>Room Related Information</h5></td>
+                                </tr>
+                                <tr><th>Registration Number</th><td>{{roomdata.userreg.regNo}}</td></tr>
+                                <tr><th>Apply Date</th><td>{{roomdata.userreg.regDate}}</td></tr>
+                                <tr><th>Room No.</th><td>{{roomdata.rooms.room_no}}</td></tr>
+                                <tr><th>Seater</th><td>{{roomdata.rooms.seater}} Seater</td></tr>
+                                <tr><th>Booking Date</th><td>{{roomdata.stayfrom}}</td></tr>
+                                <tr><th>Time Slot</th><td>{% if roomdata.start_time and roomdata.end_time %}{{roomdata.start_time|time:"H:i"}} - {{roomdata.end_time|time:"H:i"}}{% else %}Not specified{% endif %}</td></tr>
+
+                                <tr>
+                                   <td colspan="2" style="text-align:center; color:green"><h5>Personal Information</h5></td>
+                                </tr>
+                                <tr><th>Profile Image</th><td>{% if roomdata.userreg.image %}<img src="{{roomdata.userreg.image.url}}" width="70" height="70">{% else %}No image uploaded{% endif %}</td></tr>
+                                <tr><th>Full Name</th><td>{{roomdata.userreg.users.first_name}} {{roomdata.userreg.users.last_name}}</td></tr>
+                                <tr><th>Email</th><td>{{roomdata.userreg.users.username}}</td></tr>
+                                <tr><th>Contact No</th><td>{{roomdata.userreg.contactNo}}</td></tr>
+                                <tr><th>Gender</th><td>{{roomdata.userreg.gender}}</td></tr>
+                                <tr><th>Specialty / Major</th><td>{{roomdata.userreg.faculty|default:"-"}}</td></tr>
+
+                                <tr>
+                                   <td colspan="2" style="text-align:center; color:green"><h5>Address</h5></td>
+                                </tr>
+                                <tr><th>Permanent Address</th><td>
+                                    {% if roomdata.pmntAddress %}{{ roomdata.pmntAddress }}{% else %}{{ roomdata.userreg.permAddress|default:"-" }}{% endif %}<br>
+                                    {% if roomdata.pmntCity %}{{ roomdata.pmntCity }}{% else %}-{% endif %} , {% if roomdata.pmntPincode %}{{ roomdata.pmntPincode }}{% else %}-{% endif %}<br>
+                                    {% if roomdata.pmnatetState %}{{ roomdata.pmnatetState }}{% else %}-{% endif %}
+                                </td></tr>
+
+                              <tr>
+                                <td colspan="6"><span style="float:left" ><i class="fa fa-print fa-2x" aria-hidden="true" OnClick="CallPrint(this.value)" style="cursor:pointer" title="Print the Report"></i></span></td>
+                              </tr>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+           </div>
+    </div>
+</div>
+</div>
+
+<script>
+$(function () {
+$("[data-toggle=tooltip]").tooltip();
+    });
+function CallPrint(strid) {
+var prtContent = document.getElementById("print");
+var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+WinPrint.document.write(prtContent.innerHTML);
+WinPrint.document.close();
+WinPrint.focus();
+WinPrint.print();
+WinPrint.close();
+}
+</script>
+{% endblock content %}

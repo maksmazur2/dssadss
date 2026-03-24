@@ -1,0 +1,111 @@
+﻿{% extends 'admin_base.html' %}
+{% block main %}
+
+<style>
+    .form-section {
+        border-left: 4px solid orange;
+        padding-left: 15px;
+    }
+
+    .form-section label i {
+        width: 20px;
+    }
+</style>
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="form-section text-dark mb-4">
+            <i class="fas fa-door-open text-primary mr-2"></i> Add New Cabinet
+        </h5>
+
+        <div class="container-fluid">
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Select Seater -->
+                <div class="form-group mb-3">
+                    <label><i class="fas fa-chair text-secondary"></i> Select Seater</label>
+                    <select name="seater" class="form-control" required>
+                        <option value="">Select Seater</option>
+                        <option value="1">Single Seater</option>
+                        <option value="2">Two Seater</option>
+                        <option value="3">Three Seater</option>
+                        <option value="4">Four Seater</option>
+                        <option value="5">Five Seater</option>
+                    </select>
+                </div>
+
+                <!-- Cabinet Number -->
+                <div class="form-group mb-3">
+                    <label><i class="fas fa-hashtag text-secondary"></i> Cabinet Number</label>
+                    <input type="text" name="room_no" class="form-control" placeholder="e.g. A101" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-users text-secondary"></i> Max Capacity</label>
+                    <input type="number" name="max_capacity" class="form-control" placeholder="e.g. 4">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label><i class="fas fa-layer-group text-secondary"></i> Category</label>
+                        <select name="category" class="form-control">
+                            <option value="">Select Category</option>
+                            <option value="individual">Individual Study</option>
+                            <option value="group">Group Study</option>
+                            <option value="quiet">Quiet Study</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label><i class="fas fa-street-view text-secondary"></i> Zone</label>
+                        <select name="zone" class="form-control">
+                            <option value="">Select Zone</option>
+                            <option value="Silent Study">Silent Study</option>
+                            <option value="Quiet Study">Quiet Study</option>
+                            <option value="Collaborative">Collaborative</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label><i class="fas fa-building text-secondary"></i> Floor</label>
+                        <input type="text" name="floor" class="form-control" placeholder="e.g. 5 or 5A">
+                    </div>
+                    <div class="form-group col-md-3 d-flex align-items-center">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="is_accessible" id="is_accessible">
+                            <label class="form-check-label" for="is_accessible">Accessible</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3 d-flex align-items-center">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="has_power" id="has_power" checked>
+                            <label class="form-check-label" for="has_power">Power</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Submit Button -->
+                <div class="text-right">
+                    <input type="submit" value="Submit" class="btn btn-primary px-4">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Feedback -->
+{% if error == "no" %}
+<script>
+    alert('New Cabinet has been Added');
+    window.location = '{% url "manage_Room" %}';
+</script>
+{% elif error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+{% endblock %}

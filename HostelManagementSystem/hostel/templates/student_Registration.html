@@ -1,0 +1,344 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<script>
+    function checkpass()
+    {
+      if(document.signup.password.value!=document.signup.cpwd.value){
+        alert('Password and Confirm Password field does not match');
+        document.signup.cpwd.focus();
+        return false;
+      }
+      return true;
+    }
+</script>
+
+<div class="card shadow mt-2">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Student Registration </h5>
+        <div class="container-fluid">
+            <form method="POST" name="signup" enctype="multipart/form-data" onsubmit="return checkpass();">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <label class="col-sm-4 mt-2"><p style="color: blue" align="left">Cabinet Related information :</p>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Cabinet No.</label>
+                            <select class="form-control" name="rooms" required>
+                                <option value="">Select Cabinet</option>
+                                {% for i in rooms %}
+                                <option value="{{i.id}}">Cabinet No. {{i.room_no}} [{{i.seater}} Seater] [Fee : {{i.fees}} Rs.]</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Food Status</label>
+                            <input type="radio" value="Without Food" name="foodstatus" checked="checked"> Without Food
+                            <input type="radio" value="With Food" name="foodstatus"> With
+                            Food(Rs 2000.00 Per Month Extra)
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Stay From</label>
+                            <input type="date" name="stayfrom" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <Select name="duration" class="form-control" required>
+                                <option value="">Select Duration in Month</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12">
+                        <label class="col-sm-4 mt-2"><p style="color: red" align="left">Student information :</p>
+                        </label>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Registration No :</label>
+                            <input type="text" name="regNo" value="{{regno}}" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>First Name :</label>
+                            <input type="text" name="firstName" class="form-control" required>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Last Name :</label>
+                            <input type="text" name="lastName" class="form-control" required>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Gender </label>
+                            <select name="gender" class="form-control" required="required">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                          </select>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Contact No.</label>
+                            <input type="text" name="contactNo" class="form-control" required>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Email id</label>
+                            <input type="text" name="email" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="cpwd" id="cpwd"
+                               placeholder="Enter Again Password" required>
+                    </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                          <label>Image</label>
+						  <input type="file" name="image" class="form-control">
+                        </div>
+                     </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Emergency Contact</label>
+                            <input type="text" name="egycontactno" class="form-control" placeholder="Enter Contact Number"
+                                   required>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Guardian Name </label>
+                            <input type="text" name="guardianName" class="form-control" placeholder="Enter Guardian Name"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Guardian Relation </label>
+                            <input type="text" name="guardianRelation" class="form-control" placeholder="Enter Guardian Relation"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Guardian Contact no : </label>
+                            <input type="text" name="guardianContactno" class="form-control" placeholder="Enter Guardian Contact No"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <label class="col-sm-4 mt-2"><p style="color: green" align="left">Correspondense Address :</p>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Address </label>
+                            <textarea name="corresAddress" id="pcorresAddress" class="form-control" placeholder="Enter Address"
+                                      required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>City </label>
+                            <input type="text" name="corresCIty" id="pcorresCIty" class="form-control" placeholder="Enter City"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>State</label>
+                            <Select name="corresState" id="pcorresState" class="form-control" required>
+                                <option value="">Select State</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh (UT)">Chandigarh (UT)</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                           </Select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" name="corresPincode" id="pcorresPincode" class="form-control" placeholder="Enter Pin Code"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <label class="col-sm-4 mt-2"><p style="color: blue" align="left">Permanent Address :</p>
+                        </label>
+                    </div>
+
+                    <label class="col-sm-5">Permanent Address same as Correspondense address : </label>
+                      <div class="col-sm-4">
+                         <input type="checkbox" name="adcheck" value="1"/>
+                      </div>
+                     <br>
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Address </label>
+                            <textarea name="pmntAddress" id="ppmntAddress" class="form-control" placeholder="Enter Address"
+                                      required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>City </label>
+                            <input type="text" name="pmntCity" id="ppmntCity" class="form-control" placeholder="Enter Course Code"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>State</label>
+                            <Select name="pmnatetState" id="ppmnatetState" class="form-control" required>
+                                <option value="">Select State</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh (UT)">Chandigarh (UT)</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                           </Select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" name="pmntPincode" id="ppmntPincode" class="form-control" placeholder="Enter Pin Code"
+                                   required>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <input type="submit" value="Submit" class="m-2 px-3 btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if error ==  "no" %}
+<script>
+    alert('Student Registration Successfully');
+
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true){
+                $('#ppmntAddress').val( $('#pcorresAddress').val() );
+                $('#ppmntCity').val( $('#pcorresCIty').val() );
+                $('#ppmnatetState').val( $('#pcorresState').val() );
+                $('#ppmntPincode').val( $('#pcorresPincode').val() );
+            }
+        });
+
+         $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == false){
+                $('#ppmntAddress').val(null);
+                $('#ppmntCity').val(null);
+                $('#ppmnatetState').val(null);
+                $('#ppmntPincode').val(null);
+            }
+        });
+
+    });
+</script>
+
+
+
+{% endblock %}

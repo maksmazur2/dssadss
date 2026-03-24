@@ -1,0 +1,107 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+        <div class="card-body">
+            <h5 class="p-2" style="border-bottom: 2px solid orange;">Edit Cabinet</h5>
+            <div class="container-fluid">
+                <form method="POST">
+                    {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Select Seater</label>
+                           <Select name="seater" class="form-control" required>
+                                <option value="{{room.seater}}">{{room.seater}}</option>
+                                <option value="1">Single Seater</option>
+                                <option value="2">Two Seater</option>
+                                <option value="3">Three Seater</option>
+                                <option value="4">Four Seater</option>
+                                <option value="5">Five Seater</option>
+                           </Select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Cabinet No.</label>
+                            <input type="text" name="room_no" class="form-control" value="{{room.room_no}}" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            <input type="number" name="max_capacity" class="form-control" value="{{room.max_capacity}}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Fee (Per Student)</label>
+                            <input type="text" name="fees" class="form-control" value="{{room.fees}}" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" class="form-control">
+                                <option value="{{room.category}}">{{room.category|default:'Select Category'}}</option>
+                                <option value="individual">Individual Study</option>
+                                <option value="group">Group Study</option>
+                                <option value="quiet">Quiet Study</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Zone</label>
+                            <input type="text" name="zone" class="form-control" value="{{room.zone}}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Floor</label>
+                            <input type="text" name="floor" class="form-control" value="{{room.floor}}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="is_accessible" id="is_accessible" {% if room.is_accessible %}checked{% endif %}>
+                            <label class="form-check-label" for="is_accessible">Accessible</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="has_power" id="has_power" {% if room.has_power %}checked{% endif %}>
+                            <label class="form-check-label" for="has_power">Power</label>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <input type="submit" value="Update" class="m-2 px-3 btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if error ==  "no" %}
+<script>
+    alert('Cabinet has been Updated..');
+    window.location=('{% url 'manage_Room' %}');
+
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+
+{% endblock %}

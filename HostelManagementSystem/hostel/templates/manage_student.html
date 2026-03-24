@@ -1,0 +1,85 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Cabinet Bookings</h5>
+        <div class="container-fluid mt-3">
+            <div class="row mb-3">
+                <div class="col-md-4 mb-2">
+                    <select id="filterTime" class="form-control">
+                        <option value="">All times</option>
+                        {% for h in hour_list %}
+                        <option value="{{ h }}:">{{ h }}:00</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <select id="filterCabinet" class="form-control">
+                        <option value="">All cabinets</option>
+                        {% for cab in cabinet_list %}
+                            <option value="{{ cab }}">{{ cab }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Cabinet Number</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+             {% for i in stdata %}
+             <tr>
+                 <td>{{forloop.counter}}</td>
+                 <td>{{i.userreg.users.first_name}}</td>
+                 <td>{{i.userreg.users.last_name}}</td>
+                 <td>
+                   {% if i.appointment_date %}
+                     {{ i.appointment_date }}
+                   {% elif i.stayfrom %}
+                     {{ i.stayfrom }}
+                   {% else %}
+                     <span class="text-muted">N/A</span>
+                   {% endif %}
+                 </td>
+                 <td>
+                   {% if i.start_time and i.end_time %}
+                     {{ i.start_time|time:"H:i" }} - {{ i.end_time|time:"H:i" }}
+                   {% elif i.start_time %}
+                     {{ i.start_time|time:"H:i" }}
+                   {% else %}
+                     <span class="text-muted">N/A</span>
+                   {% endif %}
+                 </td>
+                 <td>{{i.rooms.room_no}}</td>
+                 <td><a href="{% url 'view_RegistrationDtls' i.id %}" class="text-primary">View</a> |
+                 <a href="{% url 'delete_StudentReg' i.id %}" class="text-danger" onclick="return confirm('Are You Sure?')">Delete</a></td>
+             </tr>
+             {% endfor %}
+             </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+      var table = $('#example').DataTable();
+      $('#filterTime').on('change', function () {
+          table.column(3).search(this.value).draw();
+      });
+      $('#filterCabinet').on('change', function () {
+          table.column(4).search(this.value).draw();
+      });
+  });
+</script>
+
+{% endblock %}

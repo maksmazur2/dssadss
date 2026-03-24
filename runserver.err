@@ -1,0 +1,127 @@
+Watching for file changes with StatReloader
+[24/Feb/2026 23:19:21] "GET /room_Details HTTP/1.1" 200 16909
+Not Found: /background.png
+[24/Feb/2026 23:19:21] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:19:25] "POST /delete_RoomDtls/46 HTTP/1.1" 302 0
+[24/Feb/2026 23:19:25] "GET /room_Details HTTP/1.1" 200 15987
+Not Found: /background.png
+[24/Feb/2026 23:19:25] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:19:28] "POST /delete_RoomDtls/47 HTTP/1.1" 302 0
+[24/Feb/2026 23:19:28] "GET /room_Details HTTP/1.1" 200 15065
+Not Found: /background.png
+[24/Feb/2026 23:19:28] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:19:29] "GET / HTTP/1.1" 200 18318
+[24/Feb/2026 23:19:29,950] - Broken pipe from ('127.0.0.1', 63124)
+[24/Feb/2026 23:20:11] "GET /my_Profile HTTP/1.1" 200 8675
+Not Found: /background.png
+[24/Feb/2026 23:20:12] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:13] "GET /room_Details HTTP/1.1" 200 15065
+Not Found: /background.png
+[24/Feb/2026 23:20:13] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:15] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:20:15] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:32] "GET /room_Details HTTP/1.1" 200 15065
+Not Found: /background.png
+[24/Feb/2026 23:20:32] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:33] "GET /view_RoomDtls/48 HTTP/1.1" 200 9399
+Not Found: /view_RoomDtls/background.png
+[24/Feb/2026 23:20:34] "GET /view_RoomDtls/background.png HTTP/1.1" 404 6797
+[24/Feb/2026 23:20:43] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:20:43] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:55] "GET /my_Profile HTTP/1.1" 200 8675
+Not Found: /background.png
+[24/Feb/2026 23:20:55] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:20:57] "GET /student_Registration HTTP/1.1" 200 24713
+[24/Feb/2026 23:21:00] "GET /manage_student HTTP/1.1" 200 11585
+[24/Feb/2026 23:21:02] "GET /admin_home HTTP/1.1" 200 8264
+[24/Feb/2026 23:21:05] "GET /admin_home HTTP/1.1" 200 8264
+[24/Feb/2026 23:21:06] "GET /student_Registration HTTP/1.1" 200 24713
+[24/Feb/2026 23:21:10] "GET /admin_home HTTP/1.1" 200 8264
+[24/Feb/2026 23:21:32] "GET /add_Course HTTP/1.1" 200 8011
+[24/Feb/2026 23:22:38] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:22:38] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:22:41] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:22:41] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:23:07] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:23:07] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:23:10] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:23:10] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:06] "GET /book_Hostel HTTP/1.1" 200 17836
+Not Found: /background.png
+[24/Feb/2026 23:24:06] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:20] "GET /book_Hostel HTTP/1.1" 200 17936
+Not Found: /background.png
+[24/Feb/2026 23:24:21] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:42] "GET /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 41655
+Not Found: /background.png
+[24/Feb/2026 23:24:42] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:47] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 41655
+Not Found: /background.png
+[24/Feb/2026 23:24:47] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:48] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 40077
+Not Found: /background.png
+[24/Feb/2026 23:24:48] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:50] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 38474
+Not Found: /background.png
+[24/Feb/2026 23:24:50] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:51] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 36871
+Not Found: /background.png
+[24/Feb/2026 23:24:51] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:52] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 35293
+Not Found: /background.png
+[24/Feb/2026 23:24:52] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:54] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 33718
+Not Found: /background.png
+[24/Feb/2026 23:24:54] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:24:56] "POST /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 41763
+Not Found: /background.png
+[24/Feb/2026 23:24:56] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:03] "GET /book_Hostel?category=Show+All&capacity=All+Spaces+%28not+seats%29&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 32142
+Not Found: /background.png
+[24/Feb/2026 23:25:03] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:10] "GET /book_Hostel?category=Show+All&capacity=1-2+People&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 27342
+Not Found: /background.png
+[24/Feb/2026 23:25:10] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:18] "GET /book_Hostel?category=group&capacity=1-2+People&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 17940
+Not Found: /background.png
+[24/Feb/2026 23:25:18] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:22] "GET /book_Hostel?category=group&capacity=5%2B+People&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 17940
+Not Found: /background.png
+[24/Feb/2026 23:25:22] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:26] "GET /book_Hostel?category=group&capacity=3-4+People&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 22708
+Not Found: /background.png
+[24/Feb/2026 23:25:26] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:35] "POST /book_Hostel?category=group&capacity=3-4+People&zone=Show+All&stayfrom=2026-02-27&start_time=08%3A00&end_time=11%3A00 HTTP/1.1" 200 22708
+Not Found: /background.png
+[24/Feb/2026 23:25:35] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:37] "GET /room_Details HTTP/1.1" 200 21519
+Not Found: /background.png
+[24/Feb/2026 23:25:37] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:40] "GET /book_Hostel HTTP/1.1" 200 17936
+Not Found: /background.png
+[24/Feb/2026 23:25:40] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:41] "GET /room_Details HTTP/1.1" 200 21519
+Not Found: /background.png
+[24/Feb/2026 23:25:41] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:43] "GET /room_Details HTTP/1.1" 200 21519
+Not Found: /background.png
+[24/Feb/2026 23:25:43] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:50] "GET /user_home HTTP/1.1" 200 7947
+Not Found: /background.png
+[24/Feb/2026 23:25:50] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:57] "GET /room_Details HTTP/1.1" 200 21519
+Not Found: /background.png
+[24/Feb/2026 23:25:57] "GET /background.png HTTP/1.1" 404 6755
+[24/Feb/2026 23:25:59] "GET /view_RoomDtls/48 HTTP/1.1" 200 9399
+Not Found: /view_RoomDtls/background.png
+[24/Feb/2026 23:26:00] "GET /view_RoomDtls/background.png HTTP/1.1" 404 6797
+[24/Feb/2026 23:26:08] "GET /manage_student HTTP/1.1" 200 15155
+[24/Feb/2026 23:26:08] "GET /static/images/Campus1.jpg HTTP/1.1" 304 0
+[24/Feb/2026 23:26:10] "GET /manage_student HTTP/1.1" 200 15155
+[24/Feb/2026 23:26:14] "GET /view_RegistrationDtls/61 HTTP/1.1" 200 9578

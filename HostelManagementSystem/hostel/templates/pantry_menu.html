@@ -1,0 +1,120 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <h4>Student Pantry</h4>
+            <p class="text-muted small mb-0">Free pickup. Portions close when they run out.</p>
+        </div>
+        <div class="col-md-6 text-right">
+            <form method="get" class="form-inline justify-content-end">
+                <label class="mr-2 mb-2">Date</label>
+                <input type="date" class="form-control mb-2 mr-2" name="date" value="{{ date_str }}" onchange="this.form.submit()">
+                <noscript><button class="btn btn-primary mb-2">Go</button></noscript>
+            </form>
+        </div>
+    </div>
+
+    {% if success %}
+        <div class="alert alert-success">Order placed. See your order below.</div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% for label, items in meal_sections %}
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span class="font-weight-bold">
+                    {{ label }}
+                    <span class="text-muted small ml-2">
+                        {% if label == "Breakfast" %}06:00 - 12:00{% elif label == "Lunch" %}12:00 - 14:00{% else %}14:00 - 24:00{% endif %}
+                    </span>
+                </span>
+                <span class="small text-muted">{{ target_date|date:"M d, Y" }}</span>
+            </div>
+            <div class="card-body">
+                {% if items %}
+                    <div class="row">
+                        {% for item in items %}
+                            <div class="col-md-4 mb-3">
+                                <div class="border rounded p-3 h-100">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-1">{{ item.dish.name }}</h6>
+                                        <span class="badge {% if item.portions_available > 0 %}badge-success{% else %}badge-secondary{% endif %}">
+                                            {{ item.portions_available }} left
+                                        </span>
+                                    </div>
+                                    <div class="small text-muted mb-1">Window: {{ item.window_label }}</div>
+                                    {% if item.dish.allergens %}
+                                        <div class="small text-danger">Allergens: {{ item.dish.allergens }}</div>
+                                    {% endif %}
+                                    {% if item.dish.tags %}
+                                        <div class="small text-muted">Tags: {{ item.dish.tags }}</div>
+                                    {% endif %}
+                                    <p class="small text-secondary mb-2">{{ item.dish.description|default:"" }}</p>
+                                    {% if item.portions_available > 0 %}
+                                        {% if item.is_in_window %}
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="menu_id" value="{{ item.id }}">
+                                            <div class="form-row align-items-center">
+                                                <div class="col-6">
+                                                    <input type="number" min="1" max="{{ item.portions_available }}" name="quantity" value="1" class="form-control form-control-sm">
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <button class="btn btn-primary btn-sm btn-block" type="submit">Order</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% else %}
+                                            <span class="text-muted">
+                                                {% if item.is_future_window %}
+                                                    Ordering opens at {{ item.window_label }} today.
+                                                {% else %}
+                                                    Ordering closed for this meal.
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="text-muted">Sold out</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No dishes planned for this meal.</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light font-weight-bold">My Orders for {{ target_date|date:"M d, Y" }}</div>
+        <div class="card-body">
+            {% if my_orders %}
+                <ul class="list-group list-group-flush">
+                    {% for o in my_orders %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <span>#{{ o.id }} · {{ o.get_meal_type_display }}</span>
+                                <span class="badge badge-info">{{ o.get_status_display }}</span>
+                            </div>
+                            <div class="small text-muted">{{ o.created_at|date:"g:ia" }}</div>
+                            <div class="small">
+                                {% for it in o.items.all %}
+                                    {{ it.menu_item.dish.name }} x{{ it.quantity }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted mb-0">No orders yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

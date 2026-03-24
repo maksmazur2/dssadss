@@ -1,0 +1,59 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<style>
+    .form-section {
+        border-left: 4px solid orange;
+        padding-left: 15px;
+    }
+
+    .form-section label i {
+        width: 20px;
+    }
+</style>
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="form-section text-dark mb-4">
+            <i class="fas fa-book text-primary mr-2"></i> Add New Course
+        </h5>
+
+        <div class="container-fluid">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label><i class="fas fa-code text-secondary"></i> Course Code</label>
+                    <input type="text" name="course_code" class="form-control" placeholder="e.g. CS101" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label><i class="fas fa-tag text-secondary"></i> Course Name (Short)</label>
+                    <input type="text" name="course_sn" class="form-control" placeholder="e.g. BCA" required>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label><i class="fas fa-file-alt text-secondary"></i> Course Name (Full)</label>
+                    <input type="text" name="course_fn" class="form-control" placeholder="e.g. Bachelor of Computer Application" required>
+                </div>
+
+                <div class="text-right">
+                    <input type="submit" value="Submit" class="btn btn-primary px-4">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Feedback using JS alert (keeping your existing style) -->
+{% if error == "no" %}
+<script>
+    alert('New Course has been Added');
+        window.location = '{% url "admin_home" %}';
+</script>
+{% elif error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+{% endblock %}

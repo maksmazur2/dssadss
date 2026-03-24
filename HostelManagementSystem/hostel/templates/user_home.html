@@ -1,0 +1,59 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+
+<style>
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: 0.3s ease;
+    }
+    .dashboard-card {
+        background: transparent;
+        border: none;
+    }
+    .dashboard-card .card-body {
+        background: transparent;
+    }
+    .dashboard-card .card-footer {
+        background: transparent;
+        border-top: none;
+    }
+    .card.shadow {
+        box-shadow: none !important;
+    }
+</style>
+
+<!-- Welcome Heading -->
+<div class="text-center mt-4">
+    <h4 class="text-success font-weight-bold">Welcome Back to Campus Resourses Management System</h4>
+    <h5 class="text-primary mt-3 text-capitalize">{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+    <hr style="width: 150px; border-top: 3px solid orange;">
+</div>
+
+<!-- Dashboard Cards -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card dashboard-card shadow text-center">
+                <div class="card-body">
+                    <h4 class="text-danger"><i class="fas fa-user-alt mr-2"></i> My Profile</h4>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'my_Profile' %}" class="text-primary font-weight-bold">View Details >></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card dashboard-card shadow text-center">
+                <div class="card-body">
+                    <h4 class="text-danger"><i class="fas fa-home mr-2"></i> My Bookings</h4>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'room_Details' %}" class="text-primary font-weight-bold">View Details >></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

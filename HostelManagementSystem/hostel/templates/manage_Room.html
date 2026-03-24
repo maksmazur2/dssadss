@@ -1,0 +1,39 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Manage Cabinets</h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Seater</th>
+                    <th>Cabinet No.</th>
+                    <th>Fee (PM)</th>
+                    <th>Posting Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  {% for i in room %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.seater}}</td>
+                    <td>{{i.room_no}}</td>
+                    <td>{{i.fees}}</td>
+                    <td>{{i.posting_date}}</td>
+                    <td><a href="{% url 'edit_Room' i.id %}" class="text-primary">Edit</a> |
+                        <a href="{% url 'delete_Room' i.id %}" class="text-danger" onclick="return confirm('Are You Sure?')">Delete</a>
+                    </td>
+                </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+
+<div class="container mt-5">
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Cabinet Booking Details</h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Reg No.</th>
+                    <th>Full Name</th>
+                    <th>Email ID</th>
+                    <th>Cabinet No.</th>
+                    <th>Booking Date</th>
+                    <th>Time Slot</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in roomdata %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.userreg.regNo}}</td>
+                    <td>{{i.userreg.users.first_name}} {{i.userreg.users.last_name}}</td>
+                    <td>{{i.userreg.users.username}}</td>
+                    <td>{{i.rooms.room_no}}</td>
+                    <td>{{i.stayfrom|date:"Y-m-d"}}</td>
+                    <td>{% if i.start_time and i.end_time %}{{i.start_time|time:"H:i"}} - {{i.end_time|time:"H:i"}}{% else %}Not specified{% endif %}</td>
+                    <td class="d-flex align-items-center">
+                        <a href="{% url 'view_RoomDtls' i.id %}" class="text-primary mr-2">View</a>
+                        <form action="{% url 'delete_RoomDtls' i.id %}" method="post" class="m-0 p-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-link text-danger p-0" onclick="return confirm('Delete this booking?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

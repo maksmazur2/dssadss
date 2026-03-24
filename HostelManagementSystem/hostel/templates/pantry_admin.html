@@ -1,0 +1,168 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+<div class="container-fluid">
+    <h3 class="mb-3">Pantry</h3>
+    {% if message %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light font-weight-bold">Add Dish</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="dish">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Allergens</label>
+                            <input type="text" name="allergens" class="form-control" placeholder="e.g., nuts, dairy">
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <input type="text" name="tags" class="form-control" placeholder="vegan, halal, gluten-free">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Save Dish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light font-weight-bold">Plan Menu</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="menu">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="date" class="form-control" required value="{{ today|date:'Y-m-d' }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Meal</label>
+                            <select name="meal_type" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dish</label>
+                            <select name="dish" class="form-control" required>
+                                <option value="">Select</option>
+                                {% for d in dishes %}
+                                    <option value="{{ d.id }}">{{ d.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Portions (for the day)</label>
+                            <input type="number" min="0" name="portions" class="form-control" value="20">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Save Menu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light font-weight-bold">Recent Orders</div>
+                <div class="card-body" style="max-height:360px; overflow:auto;">
+                    {% if orders %}
+                        <ul class="list-group list-group-flush">
+                            {% for o in orders %}
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="font-weight-bold">#{{ o.id }}</span>
+                                        <span class="text-muted small">{{ o.created_at|date:"M d, g:ia" }}</span>
+                                    </div>
+                                    <div class="small text-secondary">{{ o.user.username }} · {{ o.get_meal_type_display }} ({{ o.pickup_date|date:"M d" }})</div>
+                                    <div class="small">
+                                        {% for it in o.items.all %}
+                                            {{ it.menu_item.dish.name }} x{{ it.quantity }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="badge badge-info">{{ o.get_status_display }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted mb-0">No orders yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light font-weight-bold">Inventory by Day</div>
+        <div class="card-body table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Meal</th>
+                        <th>Dish</th>
+                        <th>Total</th>
+                        <th>Picked</th>
+                        <th>Remaining</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in menus %}
+                        <tr>
+                            <td>{{ m.date|date:"M d, Y" }}</td>
+                            <td class="text-capitalize">{{ m.meal_type }}</td>
+                            <td>{{ m.dish.name }}</td>
+                            <td>{{ m.portions_total }}</td>
+                            <td>{{ m.ordered|default:0 }}</td>
+                            <td>
+                                {% if m.portions_available > 0 %}
+                                    <span class="text-success font-weight-bold">{{ m.portions_available }}</span>
+                                {% else %}
+                                    <span class="text-danger">0</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if m.portions_available > 0 %}
+                                    <span class="badge badge-success">Open</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">Closed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="post" style="display:inline-block" onsubmit="return confirm('Delete this menu item? This will also remove related orders.');">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="delete_menu">
+                                    <input type="hidden" name="menu_id" value="{{ m.id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No menu planned yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

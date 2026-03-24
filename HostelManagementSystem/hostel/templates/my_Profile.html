@@ -1,0 +1,111 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+
+<style>
+    .profile-label {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .profile-value {
+        text-transform: capitalize;
+        color: #555;
+    }
+
+    .profile-img {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #007bff;
+    }
+
+    .profile-section {
+        padding: 10px 0;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .btn-edit-profile {
+        transition: 0.3s ease;
+    }
+
+    .btn-edit-profile:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="text-center text-danger font-weight-bold">My Profile</h2>
+            <hr>
+
+            <!-- Profile Image -->
+            <div class="row profile-section text-center">
+                <div class="col-md-12">
+                    {% if data and data.image %}
+                        <img src="{{ data.image.url }}" width="120" height="120" class="profile-img" alt="Profile Image">
+                    {% else %}
+                        <div class="profile-img d-inline-flex align-items-center justify-content-center"
+                             style="width:120px;height:120px;background:#e9ecef;color:#6c757d;font-weight:bold;">
+                            No Photo
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Registration No.</div>
+                <div class="col-md-6 profile-value">{% if data %}{{ data.regNo }}{% else %}Not set{% endif %}</div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Full Name</div>
+                <div class="col-md-6 profile-value">
+                    {% if data %}{{ data.users.first_name }} {{ data.users.last_name }}
+                    {% else %}{{ user.first_name }} {{ user.last_name }}{% endif %}
+                </div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Gender</div>
+                <div class="col-md-6 profile-value">{% if data %}{{ data.gender }}{% else %}Not set{% endif %}</div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Contact Number</div>
+                <div class="col-md-6 profile-value">{% if data %}{{ data.contactNo }}{% else %}Not set{% endif %}</div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Email ID</div>
+                <div class="col-md-6 profile-value">
+                    {% if data %}{{ data.users.username }}{% else %}{{ user.username }}{% endif %}
+                </div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Specialty / Major</div>
+                <div class="col-md-6 profile-value">
+                    {% if data %}{{ data.faculty|default:"Not set" }}{% else %}Not set{% endif %}
+                </div>
+            </div>
+
+            <div class="row profile-section">
+                <div class="col-md-6 profile-label">Permanent Address</div>
+                <div class="col-md-6 profile-value">
+                    {% if data %}{{ data.permAddress|default:"Not set" }}{% else %}Not set{% endif %}
+                </div>
+            </div>
+
+            <!-- Edit Button -->
+            <div class="text-center mt-4">
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary px-4 btn-edit-profile">
+                    <i class="fas fa-edit mr-2"></i>Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

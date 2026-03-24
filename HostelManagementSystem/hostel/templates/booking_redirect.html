@@ -1,0 +1,63 @@
+﻿{% extends "user_navbar.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+      <div class="card shadow text-center">
+        <div class="card-body">
+          <h3 class="mb-2">Booking is submitted ✅</h3>
+          <p class="text-muted mb-0">Your cabinet booking was created successfully.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if booking %}
+  {% with reg=booking.userreg %}
+  {% with user_email=reg.users.email|default:reg.users.username|default:request.user.email|default:request.user.username|default:"Not provided" %}
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="mb-3">Space Information</h5>
+          <dl class="row mb-0">
+            <dt class="col-4">Location:</dt><dd class="col-8">FIU Campus</dd>
+            <dt class="col-4">Zone:</dt><dd class="col-8">{{ booking.rooms.zone|default:"Zone" }}</dd>
+            <dt class="col-4">Space:</dt><dd class="col-8">{{ booking.rooms.room_no|default:"Room" }}</dd>
+            <dt class="col-4">Date:</dt><dd class="col-8">{{ booking.stayfrom|date:"l, F j, Y" }}</dd>
+            <dt class="col-4">Time:</dt><dd class="col-8">{{ booking.start_time|time:"g:ia" }} - {{ booking.end_time|time:"g:ia" }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="mb-3">User Information</h5>
+          <dl class="row mb-3">
+            <dt class="col-4">Full Name:</dt><dd class="col-8">{{ reg.users.first_name }} {{ reg.users.last_name }}</dd>
+            <dt class="col-4">Email:</dt><dd class="col-8">{{ user_email }}</dd>
+            <dt class="col-4">Gender:</dt><dd class="col-8">{{ reg.gender|default:"-" }}</dd>
+            <dt class="col-4">Phone:</dt><dd class="col-8">{{ reg.contactNo|default:"-" }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-4 text-center">
+      <a class="btn btn-primary" href="{% url 'room_Details' %}">Go to My Bookings</a>
+    </div>
+  </div>
+  {% endwith %}
+  {% endwith %}
+  {% else %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="alert alert-info text-center">No booking found to display.</div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,139 @@
+{% extends 'user_navbar.html' %}
+{% block content %}
+
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .profile-preview {
+        border-radius: 8px;
+        object-fit: cover;
+        border: 2px solid #007bff;
+    }
+
+    .btn-update:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <h4 class="text-danger font-weight-bold pb-2 border-bottom">Edit Profile</h4>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Registration No.</label>
+                        <input type="text" name="regNo" class="form-control" value="{{ userdata.regNo }}" readonly>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="firstName" class="form-control" value="{{ userdata.users.first_name }}">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="lastName" class="form-control" value="{{ userdata.users.last_name }}">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Gender</label>
+                        <select class="form-control" name="gender">
+                            <option value="{{ userdata.gender }}">{{ userdata.gender }}</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Contact Number</label>
+                        <input type="text" name="contactNo" class="form-control" value="{{ userdata.contactNo }}">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Specialty / Major</label>
+                        <select name="faculty" class="form-control">
+                            {% with current=userdata.faculty %}
+                            <option value="">Select Specialty</option>
+                            <option value="Computer Science" {% if current == "Computer Science" %}selected{% endif %}>Computer Science</option>
+                            <option value="Information Technology" {% if current == "Information Technology" %}selected{% endif %}>Information Technology</option>
+                            <option value="Electrical Engineering" {% if current == "Electrical Engineering" %}selected{% endif %}>Electrical Engineering</option>
+                            <option value="Mechanical Engineering" {% if current == "Mechanical Engineering" %}selected{% endif %}>Mechanical Engineering</option>
+                            <option value="Civil Engineering" {% if current == "Civil Engineering" %}selected{% endif %}>Civil Engineering</option>
+                            <option value="Biomedical Engineering" {% if current == "Biomedical Engineering" %}selected{% endif %}>Biomedical Engineering</option>
+                            <option value="Business Administration" {% if current == "Business Administration" %}selected{% endif %}>Business Administration</option>
+                            <option value="Accounting" {% if current == "Accounting" %}selected{% endif %}>Accounting</option>
+                            <option value="Finance" {% if current == "Finance" %}selected{% endif %}>Finance</option>
+                            <option value="Marketing" {% if current == "Marketing" %}selected{% endif %}>Marketing</option>
+                            <option value="Hospitality Management" {% if current == "Hospitality Management" %}selected{% endif %}>Hospitality Management</option>
+                            <option value="Psychology" {% if current == "Psychology" %}selected{% endif %}>Psychology</option>
+                            <option value="Biology" {% if current == "Biology" %}selected{% endif %}>Biology</option>
+                            <option value="Chemistry" {% if current == "Chemistry" %}selected{% endif %}>Chemistry</option>
+                            <option value="Physics" {% if current == "Physics" %}selected{% endif %}>Physics</option>
+                            <option value="Mathematics" {% if current == "Mathematics" %}selected{% endif %}>Mathematics</option>
+                            <option value="Architecture" {% if current == "Architecture" %}selected{% endif %}>Architecture</option>
+                            <option value="Journalism" {% if current == "Journalism" %}selected{% endif %}>Journalism</option>
+                            <option value="Criminal Justice" {% if current == "Criminal Justice" %}selected{% endif %}>Criminal Justice</option>
+                            <option value="Music" {% if current == "Music" %}selected{% endif %}>Music</option>
+                            {% endwith %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Email ID</label>
+                        <input type="text" name="email" class="form-control" value="{{ userdata.users.username }}" readonly>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="form-label">Permanent Address</label>
+                        <textarea name="permAddress" rows="2" class="form-control" placeholder="Enter permanent address">{{ userdata.permAddress }}</textarea>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Upload New Image</label>
+                        <input type="file" name="image" class="form-control-file">
+                    </div>
+
+                    <div class="form-group col-md-6 text-center">
+                        <label class="form-label d-block">Current Image</label>
+                        {% if userdata.image %}
+                            <img src="{{ userdata.image.url }}" height="100" width="100" class="profile-preview">
+                        {% else %}
+                            <div class="profile-preview d-inline-flex align-items-center justify-content-center"
+                                 style="width:100px;height:100px;background:#e9ecef;color:#6c757d;font-weight:bold;">
+                                No Photo
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary px-4 btn-update">
+                        <i class="fas fa-save mr-1"></i> Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Profile updated successfully!');
+    window.location = "{% url 'my_Profile' %}";
+</script>
+{% elif error == "yes" %}
+<script>
+    alert('Something went wrong. Please try again.');
+</script>
+{% endif %}
+
+{% endblock content %}
