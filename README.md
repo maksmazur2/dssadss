@@ -1,6 +1,6 @@
-# Hostel Management System (Django)
+# Campus Resource Management System (Django)
 
-Hostel Management System is a Django 3.2 web app for managing hostel rooms, student registrations, and course information. It provides separate flows for students (self‑registration, bookings, profile management) and administrators (room/course CRUD, booking oversight, dashboard).
+Campus Resource Management is a Django 3.2 web app for managing  rooms, student registrations, and course information. It provides separate flows for students (self‑registration, bookings, profile management) and administrators (room/course CRUD, booking oversight, dashboard).
 
 ## Features
 - Student side: sign up/sign in, browse rooms, submit hostel booking, view booking details, edit profile, change password.
